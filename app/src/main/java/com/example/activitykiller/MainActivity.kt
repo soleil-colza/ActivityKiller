@@ -58,8 +58,6 @@ class MainActivity : ComponentActivity() {
 
                     MainScreen(
                         message = message,
-                        aliveMessage = aliveMessage,
-                        ripMessage = ripMessage,
                         onRestartClick = { restartActivity() }
                     )
                 }
@@ -78,8 +76,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen(
     message: String,
-    aliveMessage: String,
-    ripMessage: String,
     onRestartClick: () -> Unit
 ) {
     Scaffold(
@@ -87,7 +83,7 @@ fun MainScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = if (message == ripMessage) "Activity is dead🪦" else "Kill Activity👊"
+                        text = if (message == stringResource(id = R.string.rip)) "Activity is dead🪦" else "Kill Activity👊"
                     )
                 }
             )
@@ -100,9 +96,9 @@ fun MainScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LottieAnimationView(message, aliveMessage, ripMessage)
+            LottieAnimationView(message)
             Spacer(modifier = Modifier.height(16.dp))
-            if (message == ripMessage) {
+            if (message == stringResource(id = R.string.rip)) {
                 ElevatedButton(onClick = onRestartClick) {
                     Text("Restart Activity")
                 }
@@ -112,10 +108,10 @@ fun MainScreen(
 }
 
 @Composable
-fun LottieAnimationView(message: String, aliveMessage: String, ripMessage: String) {
+fun LottieAnimationView(message: String) {
     val composition by rememberLottieComposition(
         when (message) {
-            ripMessage -> LottieCompositionSpec.RawRes(R.raw.dead_pink)
+            stringResource(id = R.string.rip) -> LottieCompositionSpec.RawRes(R.raw.dead_pink)
             else -> LottieCompositionSpec.RawRes(R.raw.alive)
         }
     )
@@ -132,8 +128,6 @@ fun DefaultPreview() {
     ActivityKillerTheme {
         MainScreen(
             message = "Android",
-            aliveMessage = "Android is alive",
-            ripMessage = "RIP",
             onRestartClick = {}
         )
     }
