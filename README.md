@@ -1,4 +1,3 @@
-![activitykiller](https://github.com/soleil-colza/ActivityKiller/assets/86241298/889562b7-4ba4-412d-a9d6-26432e75d34e)
 
 ## Overview
 
@@ -17,4 +16,7 @@ If the Activity gets killed, you'll see a different animation indicating its dem
 Press on the restart button to bring the Activity back to life so you can continue learning and experimenting.
 
 Have fun while learning the intricacies of Android Activity lifecycle management!
+
+![activitykiller](https://github.com/soleil-colza/ActivityKiller/assets/86241298/889562b7-4ba4-412d-a9d6-26432e75d34e)
+
 
