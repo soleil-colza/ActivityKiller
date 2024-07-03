@@ -3,9 +3,9 @@
 
 ### Learn How Activities Can Easily Get Killed!
 
-Activities in Android can easily get killed if we're not careful. For example, rotating the screen, changing the font size, or other minor actions can cause an Activity to be killed. 
+Activities in Android can easily get killed if we're not careful. 
 
-With this app, you can learn in a fun way how and why Activities might get killed.
+For example, rotating the screen, changing the font size, or other minor actions can cause an Activity to be killed. 
 
 By interacting with the app, you'll see how different actions affect the lifecycle of an Activity. 
 
