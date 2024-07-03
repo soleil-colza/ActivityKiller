@@ -12,6 +12,7 @@ composeBom = "2024.06.00"
 lifecycleRuntimeKtxVersion = "2.8.3"
 lifecycleViewmodelCompose = "2.8.3"
 runtimeLivedata = "1.6.8"
+ktlint = "12.1.1"
 
 [libraries]
 androidx-activity-compose-v131 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
@@ -36,4 +37,4 @@ androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtim
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
