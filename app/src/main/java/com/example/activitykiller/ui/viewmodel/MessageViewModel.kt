@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MessageViewModel : ViewModel() {
-    private val _message = MutableLiveData("Android")
+    private val _message = MutableLiveData<String>()
 
     val message: LiveData<String> = _message
 

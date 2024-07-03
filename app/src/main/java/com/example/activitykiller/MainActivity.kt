@@ -1,18 +1,29 @@
 package com.example.activitykiller
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -28,30 +39,68 @@ class MainActivity : ComponentActivity() {
             ActivityKillerTheme {
                 Surface(color = MaterialTheme.colorScheme.background) {
                     val viewModel: MessageViewModel = viewModel()
-                    val message = viewModel.message.observeAsState("Android") // デフォルト値を設定
+                    val message by viewModel.message.observeAsState("")
 
-                    if (savedInstanceState != null) {
-                        viewModel.setMessage("RIP")
+                    val aliveMessage = stringResource(id = R.string.alive)
+                    val ripMessage = stringResource(id = R.string.rip)
+
+                    if (message.isEmpty()) {
+                        viewModel.setMessage(aliveMessage)
                     }
 
-                    LottieAnimationView(message.value)
+                    if (savedInstanceState != null) {
+                        viewModel.setMessage(ripMessage)
+                    }
+
+                    MainScreen(
+                        message = message,
+                        aliveMessage = aliveMessage,
+                        ripMessage = ripMessage,
+                        onRestartClick = {
+                            restartActivity()
+                        }
+                    )
                 }
+            }
+        }
+    }
+
+    private fun restartActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        finish()
+        startActivity(intent)
+    }
+}
+
+@Composable
+fun MainScreen(message: String, aliveMessage: String, ripMessage: String, onRestartClick: () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        LottieAnimationView(message, aliveMessage, ripMessage)
+        Spacer(modifier = Modifier.height(16.dp))
+        if (message == ripMessage) {
+            ElevatedButton(onClick = onRestartClick) {
+                Text("Restart Activity")
             }
         }
     }
 }
 
 @Composable
-fun LottieAnimationView(message: String) {
+fun LottieAnimationView(message: String, aliveMessage: String, ripMessage: String) {
     val composition by rememberLottieComposition(
         when (message) {
-            "RIP" -> LottieCompositionSpec.RawRes(R.raw.dead_pink)
+            ripMessage -> LottieCompositionSpec.RawRes(R.raw.dead_pink)
             else -> LottieCompositionSpec.RawRes(R.raw.alive)
         }
     )
     LottieAnimation(
         composition,
-        iterations = LottieConstants.IterateForever
+        iterations = LottieConstants.IterateForever,
+        modifier = Modifier.size(200.dp)
     )
 }
 
@@ -59,6 +108,11 @@ fun LottieAnimationView(message: String) {
 @Composable
 fun DefaultPreview() {
     ActivityKillerTheme {
-        LottieAnimationView("Android")
+        MainScreen(
+            message = "Android",
+            aliveMessage = "Android is alive",
+            ripMessage = "RIP",
+            onRestartClick = {}
+        )
     }
 }
