@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
 
                     MainScreen(
                         message = message,
-                        onRestartClick = { restartActivity() }
+                        onRestartClick = { restartActivity() },
                     )
                 }
             }
@@ -76,25 +76,26 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen(
     message: String,
-    onRestartClick: () -> Unit
+    onRestartClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = if (message == stringResource(id = R.string.rip)) "Activity is dead🪦" else "Kill Activity👊"
+                        text = if (message == stringResource(id = R.string.rip)) "Activity is dead🪦" else "Kill Activity👊",
                     )
-                }
+                },
             )
-        }
+        },
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(it),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             LottieAnimationView(message)
             Spacer(modifier = Modifier.height(16.dp))
@@ -113,12 +114,12 @@ fun LottieAnimationView(message: String) {
         when (message) {
             stringResource(id = R.string.rip) -> LottieCompositionSpec.RawRes(R.raw.dead_pink)
             else -> LottieCompositionSpec.RawRes(R.raw.alive)
-        }
+        },
     )
     LottieAnimation(
         composition,
         iterations = LottieConstants.IterateForever,
-        modifier = Modifier.size(200.dp)
+        modifier = Modifier.size(200.dp),
     )
 }
 
@@ -128,7 +129,7 @@ fun DefaultPreview() {
     ActivityKillerTheme {
         MainScreen(
             message = "Android",
-            onRestartClick = {}
+            onRestartClick = {},
         )
     }
 }
